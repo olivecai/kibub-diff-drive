@@ -161,6 +161,7 @@ class DiffDriveRemote:
         x_vel = float(x_vel)
         theta_vel = float(theta_vel)
         action_sent = self._client.send_action({"x.vel": x_vel, "theta.vel": theta_vel})
+        print("Action sent:", x_vel, theta_vel)
         return WheelState(
             left_rpm=float(action_sent["left_rpm"]),
             right_rpm=float(action_sent["right_rpm"]),

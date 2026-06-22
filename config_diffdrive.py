@@ -52,7 +52,7 @@ class DiffDriveHostConfig:
 
     connection_time_s: int = 86400
 
-    watchdog_timeout_ms: int = 500
+    watchdog_timeout_ms: int = 2000
 
     max_loop_freq_hz: int = 100
 

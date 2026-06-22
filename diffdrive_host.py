@@ -60,18 +60,18 @@ class DiffDriveHost:
 
 @draccus.wrap()
 def main(cfg: DiffDriveServerConfig):
-    logging.info("Configuring DiffDrive")
+    print("Configuring DiffDrive")
     robot = DiffDrive(cfg.robot)
 
-    logging.info("Connecting DiffDrive")
+    print("Connecting DiffDrive")
     robot.connect()
 
-    logging.info("Starting DiffDriveHost")
+    print("Starting DiffDriveHost")
     host = DiffDriveHost(cfg.host, robot)
 
     last_cmd_time = time.time()
     watchdog_active = False
-    logger.info("Waiting for commands...")
+    print("Waiting for commands...")
 
     try:
         start = time.perf_counter()
@@ -89,13 +89,13 @@ def main(cfg: DiffDriveServerConfig):
                 if not watchdog_active:
                     pass
             except Exception as e:
-                logger.error("Message fetching failed: %s", e)
+                print("Message fetching failed: %s", e)
 
             now = time.time()
             if (
                 now - last_cmd_time > host.watchdog_timeout_ms / 1000
             ) and not watchdog_active:
-                logger.warning(
+                print(
                     f"Command not received for more than {host.watchdog_timeout_ms} ms. Stopping the base."
                 )
                 watchdog_active = True
@@ -114,7 +114,7 @@ def main(cfg: DiffDriveServerConfig):
                     json.dumps(obs_to_send), flags=zmq.NOBLOCK
                 )
             except zmq.Again:
-                logger.debug("Dropping observation, no client connected")
+                print("Dropping observation, no client connected")
 
             elapsed = time.time() - loop_start_time
             time.sleep(max(1 / host.max_loop_freq_hz - elapsed, 0))
@@ -129,7 +129,7 @@ def main(cfg: DiffDriveServerConfig):
         robot.disconnect()
         host.disconnect()
 
-    logger.info("Finished DiffDrive cleanly")
+    print("Finished DiffDrive cleanly")
 
 
 if __name__ == "__main__":

@@ -15,8 +15,8 @@ with DiffDriveRemote(remote_ip="10.145.8.176") as wheels:
         sys.exit(1)
 
     print("Driving forward...")
-    wheels.drive(x_vel=0.1, theta_vel=0.0)  # 0.1 m/s forward, no turning
-    time.sleep(2.0)
+    wheels.drive(x_vel=50, theta_vel=0.0)  # 0.1 m/s forward, no turning
+    time.sleep(5.0)
 
     print("Stopping...")
     wheels.stop()
